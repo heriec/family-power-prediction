@@ -27,7 +27,7 @@ def load_data(file_path='data/train.csv', n_in=1, n_out=1):
 
     train_X, train_y = create_sliding_window_data(scaled, n_in, n_out)
     train_X = train_X.reshape(train_X.shape[0], -1)
-    print(f"Train data shape: {train_X.shape}, Train labels shape: {train_y.shape}")
+    print(f"data shape: {train_X.shape}, labels shape: {train_y.shape}")
 
     return train_X, train_y
 
