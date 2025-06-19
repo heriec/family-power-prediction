@@ -2,6 +2,7 @@ import numpy as np
 import torch
 from dataloader import create_dataloaders, load_data
 from evaluation import model_evaluate
+from models.CTSAN import CTSANModel
 from models.LSTM import LSTMModel
 from models.Transformer import TransformerModel
 from train import model_train
@@ -56,7 +57,29 @@ def test_transformer(n_in=90, n_out=90,  model_name='transformer', hidden_size=2
     draw_truth_and_prediction(all_predictions, all_targets, exp_name)
     return mse, mae
 
+def test_CTSAN(n_in=90, n_out=90,  model_name='CTSAN', hidden_size=256, num_layers=1, d_model=128, nhead=4, num_epochs=100,  lr=0.001, batch_size=64):
+    exp_name = f"{model_name}-{n_in}-{n_out}-{hidden_size}-{num_layers}-{d_model}-{nhead}"
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    test_X, test_y = load_data('data/test.csv', n_in, n_out, reshape=False)
+    test_loader = create_dataloaders(test_X, test_y, 1)
 
+    train_X, train_y = load_data('data/train.csv',  n_in, n_out, reshape=False)
+    train_loader = create_dataloaders(train_X, train_y, batch_size)
+    input_size = train_X.shape[-1]
+    output_size = train_y.shape[-1]
+    model = CTSANModel(input_size, d_model, nhead, num_layers, output_size)
+    model.to(device)
+    criterion = torch.nn.MSELoss()
+    optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+    train_losses, eval_losses = model_train(model, criterion, optimizer,
+                                            num_epochs, train_loader, test_loader, device, exp_name)
+    draw_loss(train_losses, eval_losses, exp_name)
+    model.eval()
+    all_predictions, all_targets, mae, mse = model_evaluate(
+        model, train_loader, device)
+
+    draw_truth_and_prediction(all_predictions, all_targets, exp_name)
+    return mse, mae
 
 def hyperparameter_search_lstm():
     """
@@ -159,6 +182,34 @@ def test_task_2_365():
     mae_std = np.std(mae_list)
     print(f"Task 2 (365 days) results: MSE = {mse_mean:.4f} ± {mse_std:.4f}, MAE = {mae_mean:.4f} ± {mae_std:.4f}")
 
+def test_task_3_90():
+    mse_list, mae_list = [], []
+    for _ in range(5):
+        mse, mae = test_CTSAN(n_in=90, n_out=90, model_name='CTSAN')
+        mse_list.append(mse)
+        mae_list.append(mae)
+    mse_mean = np.mean(mse_list)
+    mse_std = np.std(mse_list)
+    mae_mean = np.mean(mae_list)
+    mae_std = np.std(mae_list)
+    print(f"Task 3 (90 days) results: MSE = {mse_mean:.4f} ± {mse_std:.4f}, MAE = {mae_mean:.4f} ± {mae_std:.4f}")
+
+def test_task_3_365():
+    mse_list, mae_list = [], []
+    for _ in range(5):
+        mse, mae = test_CTSAN(n_in=90, n_out=365, model_name='CTSAN')
+        mse_list.append(mse)
+        mae_list.append(mae)
+    mse_mean = np.mean(mse_list)
+    mse_std = np.std(mse_list)
+    mae_mean = np.mean(mae_list)
+    mae_std = np.std(mae_list)
+    print(f"Task 3 (365 days) results: MSE = {mse_mean:.4f} ± {mse_std:.4f}, MAE = {mae_mean:.4f} ± {mae_std:.4f}")
 
 if __name__ == "__main__":
-    hyperparameter_search()
+    # test_task_1_90()
+    # test_task_1_365()
+    # test_task_2_90()
+    # test_task_2_365()
+    # test_task_3_90()
+    test_task_3_365()
