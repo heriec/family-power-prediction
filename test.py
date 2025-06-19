@@ -32,7 +32,7 @@ def test_lstm(n_in=90, n_out=90,  model_name='lstm', hidden_size=256, num_layers
     return mse, mae
 
 
-def hyperparameter_search():
+def hyperparameter_search_lstm():
     """
     Perform a hyperparameter search for the LSTM model.
 
