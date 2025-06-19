@@ -16,3 +16,8 @@ evaluate
 ```python
 python main.py -m lstm -l results/lstm-90-90-0.029.pth
 ```
+
+or run test for task 1 in 90 days and 365 days
+```python
+python test.py
+```
