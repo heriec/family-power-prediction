@@ -4,8 +4,8 @@ from dataloader import create_dataloaders, load_data
 from evaluation import model_evaluate
 from models.LSTM import LSTMModel
 from train import model_train
-from utils import draw_loss, draw_mse_and_mae, draw_truth_and_prediction
 from utils import draw_loss, draw_truth_and_prediction
+
 
 def test_lstm(n_in=90, n_out=90,  model_name='lstm', hidden_size=256, num_layers=1, num_epochs=100,  lr=0.001, batch_size=64):
     exp_name = f"{model_name}-{n_in}-{n_out}-{hidden_size}-{num_layers}"
