@@ -14,7 +14,7 @@ python main.py -t -m lstm
 evaluate
 
 ```python
-python main.py -m lstm -l results/lstm-90-90-0.029.pth
+python main.py -m lstm -l results/lstm-90-90-512-1-0.03.pth
 ```
 
 or run test for task 1 in 90 days and 365 days
