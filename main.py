@@ -1,12 +1,6 @@
 import argparse
 import torch
 import torch.nn as nn
-import torch.optim as optim
-import pandas as pd
-import numpy as np
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.model_selection import train_test_split
-from torch.utils.data import TensorDataset, DataLoader
 
 from dataloader import create_dataloaders, load_data
 from models.LSTM import LSTMModel
