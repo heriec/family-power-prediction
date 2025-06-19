@@ -9,7 +9,7 @@ from models.Transformer import TransformerModel
 
 from train import model_train
 from evaluation import model_evaluate
-from utils import draw_loss, draw_mse_and_mae, draw_truth_and_prediction
+from utils import draw_loss, draw_truth_and_prediction
 
 
 if __name__ == "__main__":
@@ -46,7 +46,7 @@ if __name__ == "__main__":
         output_size = train_y.shape[1]
         if args.model == 'lstm':
             model = LSTMModel(input_size, hidden_size, num_layers, output_size)
-        elif args.model == 'Transformer':
+        elif args.model == 'transformer':
             model = TransformerModel(
                 input_size, d_model, nhead, num_layers, output_size)
         model.to(device)
@@ -60,7 +60,7 @@ if __name__ == "__main__":
         output_size = test_y.shape[1]
         if args.model == 'lstm':
             model = LSTMModel(input_size, hidden_size, num_layers, output_size)
-        elif args.model == 'Transformer':
+        elif args.model == 'transformer':
             model = TransformerModel(
                 input_size, d_model, nhead, num_layers, output_size)
         model.load_state_dict(torch.load(args.load, weights_only=True))
@@ -69,4 +69,3 @@ if __name__ == "__main__":
         all_predictions, all_targets, mae, mse = model_evaluate(model, test_loader, device)
 
         draw_truth_and_prediction(all_predictions, all_targets, model_name)
-        draw_mse_and_mae(mse, mae, model_name)
