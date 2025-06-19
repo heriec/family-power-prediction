@@ -1,12 +1,11 @@
-
-
+import numpy as np
 import torch
 from dataloader import create_dataloaders, load_data
 from evaluation import model_evaluate
 from models.LSTM import LSTMModel
 from train import model_train
 from utils import draw_loss, draw_mse_and_mae, draw_truth_and_prediction
-
+from utils import draw_loss, draw_truth_and_prediction
 
 def test_lstm(n_in=90, n_out=90,  model_name='lstm', hidden_size=256, num_layers=1, num_epochs=100,  lr=0.001, batch_size=64):
     exp_name = f"{model_name}-{n_in}-{n_out}-{hidden_size}-{num_layers}"
@@ -59,6 +58,29 @@ def hyperparameter_search():
     for (hs, nl), (mse, mae) in res_map.items():
         print(f"hidden_size={hs}, num_layers={nl} => MSE: {mse:.4f}, MAE: {mae:.4f}")
 
+def test_task_1_90():
+    mse_list, mae_list = [], []
+    for _ in range(5):
+        mse, mae = test_lstm(n_in=90, n_out=90, model_name='lstm', hidden_size=512, num_layers=1, num_epochs=100, lr=0.001, batch_size=64)
+        mse_list.append(mse)
+        mae_list.append(mae)
+    mse_mean = np.mean(mse_list)
+    mse_std = np.std(mse_list)
+    mae_mean = np.mean(mae_list)
+    mae_std = np.std(mae_list)
+    print(f"Task 1 (90 days) results: MSE = {mse_mean:.4f} ± {mse_std:.4f}, MAE = {mae_mean:.4f} ± {mae_std:.4f}")
+
+def test_task_1_365():
+    mse_list, mae_list = [], []
+    for _ in range(5):
+        mse, mae = test_lstm(n_in=90, n_out=365, model_name='lstm', hidden_size=512, num_layers=1, num_epochs=100, lr=0.001, batch_size=64)
+        mse_list.append(mse)
+        mae_list.append(mae)
+    mse_mean = np.mean(mse_list)
+    mse_std = np.std(mse_list)
+    mae_mean = np.mean(mae_list)
+    mae_std = np.std(mae_list)
+    print(f"Task 1 (365 days) results: MSE = {mse_mean:.4f} ± {mse_std:.4f}, MAE = {mae_mean:.4f} ± {mae_std:.4f}")
 
 
 if __name__ == "__main__":
