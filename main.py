@@ -36,7 +36,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    hidden_size = 100
+    hidden_size = 512
     num_layers = 1
     d_model = 1
     nhead = 1
