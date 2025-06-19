@@ -84,33 +84,6 @@ def hyperparameter_search_lstm():
     for (hs, nl), (mse, mae) in res_map.items():
         print(f"hidden_size={hs}, num_layers={nl} => MSE: {mse:.4f}, MAE: {mae:.4f}")
 
-def hyperparameter_search_transformer():
-    """
-    Perform a hyperparameter search for the Transformer model.
-
-    best results:
-    hidden_size=256, num_layers=1, d_model=128, nhead=2 => MSE: 0.0067, MAE: 0.0643
-    hidden_size=256, num_layers=1, d_model=128, nhead=4 => MSE: 0.0064, MAE: 0.0626*
-    hidden_size=256, num_layers=1, d_model=128, nhead=8 => MSE: 0.0067, MAE: 0.0639
-    hidden_size=512, num_layers=1, d_model=128, nhead=2 => MSE: 0.0068, MAE: 0.0648
-    hidden_size=512, num_layers=1, d_model=128, nhead=4 => MSE: 0.0067, MAE: 0.0640
-    hidden_size=512, num_layers=1, d_model=128, nhead=8 => MSE: 0.0069, MAE: 0.0650
-    hidden_size=1024, num_layers=1, d_model=128, nhead=2 => MSE: 0.0068, MAE: 0.0646
-    hidden_size=1024, num_layers=1, d_model=128, nhead=4 => MSE: 0.0067, MAE: 0.0641
-    hidden_size=1024, num_layers=1, d_model=128, nhead=8 => MSE: 0.0067, MAE: 0.0641
-    """
-    res_map = {}
-    for hs in [256, 512, 1024]:
-        for nl in [1, 2, 4]:
-            for dm in [32, 64, 128]:
-                for nh in [2, 4, 8]:
-                    print(f"Testing Transformer with hidden_size={hs}, num_layers={nl}, d_model={dm}, nhead={nh}")
-                    mse, mae = test_transformer(hidden_size=hs, num_layers=nl, d_model=dm,  nhead=nh)
-                    res_map[(hs, nl, dm, nh)] = (mse, mae)
-    print("Results:")
-    for (hs, nl, dm, nh), (mse, mae) in res_map.items():
-        print(f"hidden_size={hs}, num_layers={nl}, d_model={dm}, nhead={nh} => MSE: {mse:.4f}, MAE: {mae:.4f}")
-
 def test_task_1_90():
     mse_list, mae_list = [], []
     for _ in range(5):
@@ -134,6 +107,30 @@ def test_task_1_365():
     mae_mean = np.mean(mae_list)
     mae_std = np.std(mae_list)
     print(f"Task 1 (365 days) results: MSE = {mse_mean:.4f} ± {mse_std:.4f}, MAE = {mae_mean:.4f} ± {mae_std:.4f}")
+
+def test_task_2_90():
+    mse_list, mae_list = [], []
+    for _ in range(1):
+        mse, mae = test_transformer(n_in=90, n_out=90, model_name='transformer')
+        mse_list.append(mse)
+        mae_list.append(mae)
+    mse_mean = np.mean(mse_list)
+    mse_std = np.std(mse_list)
+    mae_mean = np.mean(mae_list)
+    mae_std = np.std(mae_list)
+    print(f"Task 2 (90 days) results: MSE = {mse_mean:.4f} ± {mse_std:.4f}, MAE = {mae_mean:.4f} ± {mae_std:.4f}")
+
+def test_task_2_365():
+    mse_list, mae_list = [], []
+    for _ in range(5):
+        mse, mae = test_transformer(n_in=90, n_out=365, model_name='transformer')
+        mse_list.append(mse)
+        mae_list.append(mae)
+    mse_mean = np.mean(mse_list)
+    mse_std = np.std(mse_list)
+    mae_mean = np.mean(mae_list)
+    mae_std = np.std(mae_list)
+    print(f"Task 2 (365 days) results: MSE = {mse_mean:.4f} ± {mse_std:.4f}, MAE = {mae_mean:.4f} ± {mae_std:.4f}")
 
 
 if __name__ == "__main__":
