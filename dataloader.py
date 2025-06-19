@@ -13,7 +13,7 @@ def create_sliding_window_data(data, n_in=1, n_out=1):
     return np.array(X), np.array(y)
 
 
-def load_data(file_path='data/train.csv', n_in=1, n_out=1):
+def load_data(file_path='data/train.csv', n_in=1, n_out=1, reshape=True):
     df = pd.read_csv(file_path,  parse_dates=[
                      'DateTime'], index_col='DateTime', na_values=['?', ''])
     df = df.fillna(df.mean())
@@ -26,7 +26,8 @@ def load_data(file_path='data/train.csv', n_in=1, n_out=1):
     print(f"Scaled data shape: {scaled.shape}")
 
     train_X, train_y = create_sliding_window_data(scaled, n_in, n_out)
-    train_X = train_X.reshape(train_X.shape[0], -1)
+    if reshape:
+        train_X = train_X.reshape(train_X.shape[0], -1)
     print(f"data shape: {train_X.shape}, labels shape: {train_y.shape}")
 
     return train_X, train_y
