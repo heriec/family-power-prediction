@@ -85,7 +85,7 @@ loss
 
 Ground truth and prediction
 
-![results](results/transformer-90-365-256-1-128-4-truth-prediction.png)
+![results](results/transformer-90-90-256-1-128-4-truth-prediction.png)
 
 
 
