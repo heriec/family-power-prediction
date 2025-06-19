@@ -101,3 +101,42 @@ loss
 Ground truth and prediction
 
 ![results](results/transformer-90-365-256-1-128-4-truth-prediction.png)
+
+
+## CTSAN
+
+run test for task 1 in 90 days and 365 days
+
+```python
+python test.py
+```
+
+results
+90 days for 5 per experiment results
+
+```text
+Task 3 (90 days) results: MSE = 0.0065 ± 0.0001, MAE = 0.0624 ± 0.0007
+```
+
+loss
+
+![results](results/CTSAN-90-90-256-1-128-4-loss.png)
+
+Ground truth and prediction
+
+![results](results/CTSAN-90-90-256-1-128-4-truth-prediction.png)
+
+
+
+365 days for 5 per experiment results
+```text
+Task 3 (365 days) results: MSE = 0.0080 ± 0.0001, MAE = 0.0702 ± 0.0003
+```
+
+loss
+
+![results](results/CTSAN-90-365-256-1-128-4-loss.png)
+
+Ground truth and prediction
+
+![results](results/CTSAN-90-365-256-1-128-4-truth-prediction.png)
