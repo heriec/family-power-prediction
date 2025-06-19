@@ -29,3 +29,8 @@ results
 Task 1 (90 days) results: MSE = 0.0027 ± 0.0001, MAE = 0.0404 ± 0.0005
 ```
 
+365 days for 5 per experiment results
+
+```text
+Task 1 (365 days) results: MSE = 0.0037 ± 0.0001, MAE = 0.0475 ± 0.0005
+```
