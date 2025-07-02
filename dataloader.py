@@ -18,7 +18,7 @@ def load_data(file_path='data/train.csv', n_in=1, n_out=1, reshape=True):
                      'DateTime'], index_col='DateTime', na_values=['?', ''])
     df = df.fillna(df.mean())
 
-    df_resample = df.resample('D').mean()
+    df_resample = df.resample('D').sum()
     values = df_resample.values
 
     scaler = MinMaxScaler(feature_range=(0, 1))
