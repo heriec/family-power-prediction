@@ -15,7 +15,7 @@ def test_lstm(n_in=90, n_out=90,  model_name='lstm', hidden_size=256, num_layers
     train_X, train_y = load_data('data/train.csv',  n_in, n_out)
     train_loader = create_dataloaders(train_X, train_y, batch_size)
     test_X, test_y = load_data('data/test.csv', n_in, n_out)
-    test_loader = create_dataloaders(test_X, test_y, 1)
+    test_loader = create_dataloaders(test_X, test_y, batch_size)
     input_size = train_X.shape[1]
     output_size = train_y.shape[1]
     model = LSTMModel(input_size, hidden_size, num_layers, output_size)
@@ -38,7 +38,7 @@ def test_transformer(n_in=90, n_out=90,  model_name='transformer', hidden_size=2
     train_X, train_y = load_data('data/train.csv',  n_in, n_out)
     train_loader = create_dataloaders(train_X, train_y, batch_size)
     test_X, test_y = load_data('data/test.csv', n_in, n_out)
-    test_loader = create_dataloaders(test_X, test_y, 1)
+    test_loader = create_dataloaders(test_X, test_y, batch_size)
     input_size = train_X.shape[1]
     output_size = train_y.shape[1]
     model = TransformerModel(input_size, d_model, nhead, num_layers, output_size)
@@ -58,10 +58,10 @@ def test_transformer(n_in=90, n_out=90,  model_name='transformer', hidden_size=2
 def test_CTSAN(n_in=90, n_out=90,  model_name='CTSAN', hidden_size=256, num_layers=1, d_model=128, nhead=4, num_epochs=100,  lr=0.001, batch_size=64):
     exp_name = f"{model_name}-{n_in}-{n_out}-{hidden_size}-{num_layers}-{d_model}-{nhead}"
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    train_X, train_y = load_data('data/train.csv',  n_in, n_out)
+    train_X, train_y = load_data('data/train.csv',  n_in, n_out, reshape=False)
     train_loader = create_dataloaders(train_X, train_y, batch_size)
-    test_X, test_y = load_data('data/test.csv', n_in, n_out)
-    test_loader = create_dataloaders(test_X, test_y, 1)
+    test_X, test_y = load_data('data/test.csv', n_in, n_out, reshape=False)
+    test_loader = create_dataloaders(test_X, test_y, batch_size)
     input_size = train_X.shape[-1]
     output_size = train_y.shape[-1]
     model = CTSANModel(input_size, d_model, nhead, num_layers, output_size)
@@ -204,9 +204,9 @@ def test_task_3_365():
     print(f"Task 3 (365 days) results: MSE = {mse_mean:.4f} ± {mse_std:.4f}, MAE = {mae_mean:.4f} ± {mae_std:.4f}")
 
 if __name__ == "__main__":
-    # test_task_1_90()
-    # test_task_1_365()
-    # test_task_2_90()
-    # test_task_2_365()
-    # test_task_3_90()
+    test_task_1_90()
+    test_task_1_365()
+    test_task_2_90()
+    test_task_2_365()
+    test_task_3_90()
     test_task_3_365()
