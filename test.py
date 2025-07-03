@@ -12,11 +12,10 @@ from utils import draw_loss, draw_truth_and_prediction
 def test_lstm(n_in=90, n_out=90,  model_name='lstm', hidden_size=256, num_layers=1, num_epochs=100,  lr=0.001, batch_size=64):
     exp_name = f"{model_name}-{n_in}-{n_out}-{hidden_size}-{num_layers}"
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    test_X, test_y = load_data('data/test.csv', n_in, n_out)
-    test_loader = create_dataloaders(test_X, test_y, 1)
-
     train_X, train_y = load_data('data/train.csv',  n_in, n_out)
     train_loader = create_dataloaders(train_X, train_y, batch_size)
+    test_X, test_y = load_data('data/test.csv', n_in, n_out)
+    test_loader = create_dataloaders(test_X, test_y, 1)
     input_size = train_X.shape[1]
     output_size = train_y.shape[1]
     model = LSTMModel(input_size, hidden_size, num_layers, output_size)
@@ -28,7 +27,7 @@ def test_lstm(n_in=90, n_out=90,  model_name='lstm', hidden_size=256, num_layers
     draw_loss(train_losses, eval_losses, exp_name)
     model.eval()
     all_predictions, all_targets, mae, mse = model_evaluate(
-        model, train_loader, device)
+        model, test_loader, device)
 
     draw_truth_and_prediction(all_predictions, all_targets, exp_name)
     return mse, mae
@@ -36,11 +35,10 @@ def test_lstm(n_in=90, n_out=90,  model_name='lstm', hidden_size=256, num_layers
 def test_transformer(n_in=90, n_out=90,  model_name='transformer', hidden_size=256, num_layers=1, d_model=128, nhead=4, num_epochs=100,  lr=0.001, batch_size=64):
     exp_name = f"{model_name}-{n_in}-{n_out}-{hidden_size}-{num_layers}-{d_model}-{nhead}"
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    test_X, test_y = load_data('data/test.csv', n_in, n_out)
-    test_loader = create_dataloaders(test_X, test_y, 1)
-
     train_X, train_y = load_data('data/train.csv',  n_in, n_out)
     train_loader = create_dataloaders(train_X, train_y, batch_size)
+    test_X, test_y = load_data('data/test.csv', n_in, n_out)
+    test_loader = create_dataloaders(test_X, test_y, 1)
     input_size = train_X.shape[1]
     output_size = train_y.shape[1]
     model = TransformerModel(input_size, d_model, nhead, num_layers, output_size)
@@ -52,7 +50,7 @@ def test_transformer(n_in=90, n_out=90,  model_name='transformer', hidden_size=2
     draw_loss(train_losses, eval_losses, exp_name)
     model.eval()
     all_predictions, all_targets, mae, mse = model_evaluate(
-        model, train_loader, device)
+        model, test_loader, device)
 
     draw_truth_and_prediction(all_predictions, all_targets, exp_name)
     return mse, mae
@@ -60,11 +58,10 @@ def test_transformer(n_in=90, n_out=90,  model_name='transformer', hidden_size=2
 def test_CTSAN(n_in=90, n_out=90,  model_name='CTSAN', hidden_size=256, num_layers=1, d_model=128, nhead=4, num_epochs=100,  lr=0.001, batch_size=64):
     exp_name = f"{model_name}-{n_in}-{n_out}-{hidden_size}-{num_layers}-{d_model}-{nhead}"
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    test_X, test_y = load_data('data/test.csv', n_in, n_out, reshape=False)
-    test_loader = create_dataloaders(test_X, test_y, 1)
-
-    train_X, train_y = load_data('data/train.csv',  n_in, n_out, reshape=False)
+    train_X, train_y = load_data('data/train.csv',  n_in, n_out)
     train_loader = create_dataloaders(train_X, train_y, batch_size)
+    test_X, test_y = load_data('data/test.csv', n_in, n_out)
+    test_loader = create_dataloaders(test_X, test_y, 1)
     input_size = train_X.shape[-1]
     output_size = train_y.shape[-1]
     model = CTSANModel(input_size, d_model, nhead, num_layers, output_size)
@@ -76,7 +73,7 @@ def test_CTSAN(n_in=90, n_out=90,  model_name='CTSAN', hidden_size=256, num_laye
     draw_loss(train_losses, eval_losses, exp_name)
     model.eval()
     all_predictions, all_targets, mae, mse = model_evaluate(
-        model, train_loader, device)
+        model, test_loader, device)
 
     draw_truth_and_prediction(all_predictions, all_targets, exp_name)
     return mse, mae
