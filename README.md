@@ -26,7 +26,7 @@ results
 90 days for 5 per experiment results
 
 ```text
-Task 1 (90 days) results: MSE = 0.0027 ± 0.0001, MAE = 0.0404 ± 0.0005
+Task 1 (90 days) results: MSE = 0.0308 ± 0.0018, MAE = 0.1358 ± 0.0033
 ```
 
 loss
@@ -41,7 +41,7 @@ Ground truth and prediction
 365 days for 5 per experiment results
 
 ```text
-Task 1 (365 days) results: MSE = 0.0037 ± 0.0001, MAE = 0.0475 ± 0.0005
+Task 1 (365 days) results: MSE = 0.0182 ± 0.0003, MAE = 0.1057 ± 0.0011
 ```
 
 loss
@@ -76,7 +76,7 @@ results
 90 days for 5 per experiment results
 
 ```text
-Task 2 (90 days) results: MSE = 0.0045 ± 0.0001, MAE = 0.0523 ± 0.0006
+Task 2 (90 days) results: MSE = 0.0269 ± 0.0000, MAE = 0.1314 ± 0.0000
 ```
 
 loss
@@ -91,7 +91,7 @@ Ground truth and prediction
 
 365 days for 5 per experiment results
 ```text
-Task 2 (365 days) results: MSE = 0.0068 ± 0.0000, MAE = 0.0645 ± 0.0002
+Task 2 (365 days) results: MSE = 0.0204 ± 0.0006, MAE = 0.1124 ± 0.0018
 ```
 
 loss
@@ -115,7 +115,7 @@ results
 90 days for 5 per experiment results
 
 ```text
-Task 3 (90 days) results: MSE = 0.0065 ± 0.0001, MAE = 0.0624 ± 0.0007
+Task 3 (90 days) results: MSE = 0.0215 ± 0.0031, MAE = 0.1172 ± 0.0089
 ```
 
 loss
@@ -130,7 +130,7 @@ Ground truth and prediction
 
 365 days for 5 per experiment results
 ```text
-Task 3 (365 days) results: MSE = 0.0080 ± 0.0001, MAE = 0.0702 ± 0.0003
+Task 3 (365 days) results: MSE = 0.0197 ± 0.0021, MAE = 0.1107 ± 0.0063
 ```
 
 loss
