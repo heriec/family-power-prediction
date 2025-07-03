@@ -1,3 +1,4 @@
+import pickle
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
@@ -22,7 +23,14 @@ def load_data(file_path='data/train.csv', n_in=1, n_out=1, reshape=True):
     values = df_resample.values
 
     scaler = MinMaxScaler(feature_range=(0, 1))
-    scaled = scaler.fit_transform(values)
+    if "data/train.csv" == file_path:
+        scaled = scaler.fit_transform(values)
+        with open('scaler.pkl', 'wb') as f:
+            pickle.dump(scaler, f)
+    else:
+        with open('scaler.pkl', 'rb') as f:
+            scaler = pickle.load(f)
+        scaled = scaler.transform(values)
     print(f"Scaled data shape: {scaled.shape}")
 
     train_X, train_y = create_sliding_window_data(scaled, n_in, n_out)
