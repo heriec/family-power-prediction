@@ -2,7 +2,6 @@
 
 This repository contains code for predicting family power using machine learning techniques.
 
-> Note: 之前Ground truth and prediction错把train data写成test data了，结果是train data的预测结果，现已经修正，pdf已交就不改了。我的方法 CTSAN 效果还行，由于Transformer，略低于LSTM.
 ## LSTM
 
 train
